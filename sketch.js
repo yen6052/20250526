@@ -73,6 +73,9 @@ function draw() {
     }
     let [x, y] = keypoints[idx];
 
+    // 讓臉往右移動半個畫面
+    x += width / 4;
+
     noFill();
     stroke(255, 0, 0);
     strokeWeight(4);
