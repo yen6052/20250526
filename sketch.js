@@ -27,8 +27,8 @@ function draw() {
   if (predictions.length > 0) {
     const keypoints = predictions[0].scaledMesh;
 
-    // 只在第94點畫紅色圓
-    const [x, y] = keypoints[94];
+    // 在第10點（額頭）畫紅色圓
+    const [x, y] = keypoints[10];
     noFill();
     stroke(255, 0, 0);
     strokeWeight(4);
