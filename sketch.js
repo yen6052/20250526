@@ -27,8 +27,16 @@ function draw() {
   if (predictions.length > 0) {
     const keypoints = predictions[0].scaledMesh;
 
-    // 在第10點（額頭）畫紅色圓
-    const [x, y] = keypoints[10];
+    // 假設 gesture 變數已正確設定
+    let x, y;
+    if (gesture === "剪刀") {
+      // 左眼（第33點）
+      [x, y] = keypoints[33];
+    } else {
+      // 預設第94點
+      [x, y] = keypoints[94];
+    }
+
     noFill();
     stroke(255, 0, 0);
     strokeWeight(4);
