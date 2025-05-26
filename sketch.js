@@ -60,12 +60,7 @@ function draw() {
   if (predictions.length > 0) {
     const keypoints = predictions[0].scaledMesh;
 
-    // 取得原始 video 尺寸
-    const vw = video.width;
-    const vh = video.height;
-
     // 根據手勢決定圓圈位置
-    let x, y;
     let idx = 168; // 預設下巴
     if (gesture === "剪刀") {
       idx = 159; // 左眼上緣
@@ -74,11 +69,8 @@ function draw() {
     } else if (gesture === "布") {
       idx = 454; // 右臉頰
     }
-    // 取得原始點座標
-    let [px, py] = keypoints[idx];
-    // 依照 canvas 尺寸縮放
-    x = px * width / vw;
-    y = py * height / vh;
+    // 直接取得點座標（不需縮放）
+    let [x, y] = keypoints[idx];
 
     noFill();
     stroke(255, 0, 0);
