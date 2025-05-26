@@ -55,21 +55,22 @@ function detectGesture(hands) {
 }
 
 function draw() {
+  // 鏡像處理
+  translate(width, 0);
+  scale(-1, 1);
+
   image(video, 0, 0, width, height);
 
   if (predictions.length > 0) {
     const keypoints = predictions[0].scaledMesh;
-
-    // 根據手勢決定圓圈位置
-    let idx = 168; // 預設下巴
+    let idx = 168;
     if (gesture === "剪刀") {
-      idx = 159; // 左眼上緣
+      idx = 159;
     } else if (gesture === "石頭") {
-      idx = 10; // 額頭中心
+      idx = 10;
     } else if (gesture === "布") {
-      idx = 454; // 右臉頰
+      idx = 454;
     }
-    // 直接取得點座標（不需縮放）
     let [x, y] = keypoints[idx];
 
     noFill();
@@ -77,7 +78,6 @@ function draw() {
     strokeWeight(4);
     ellipse(x, y, 100, 100);
 
-    // 顯示手勢
     noStroke();
     fill(0, 200, 0);
     textSize(32);
