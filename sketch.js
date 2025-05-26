@@ -63,17 +63,17 @@ function draw() {
     // 根據手勢決定圓圈位置
     let x, y;
     if (gesture === "剪刀") {
-      // 左眼（第33點）
-      [x, y] = keypoints[33];
+      // 左眼上緣（第159點）
+      [x, y] = keypoints[159];
     } else if (gesture === "石頭") {
-      // 額頭（第10點）
+      // 額頭中心（第10點或151點）
       [x, y] = keypoints[10];
     } else if (gesture === "布") {
-      // 右臉頰（第454點）
+      // 右臉頰外側（第454點）
       [x, y] = keypoints[454];
     } else {
-      // 預設第94點
-      [x, y] = keypoints[94];
+      // 預設第168點（下巴中間）
+      [x, y] = keypoints[168];
     }
 
     noFill();
