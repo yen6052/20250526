@@ -60,21 +60,25 @@ function draw() {
   if (predictions.length > 0) {
     const keypoints = predictions[0].scaledMesh;
 
+    // 取得原始 video 尺寸
+    const vw = video.width;
+    const vh = video.height;
+
     // 根據手勢決定圓圈位置
     let x, y;
+    let idx = 168; // 預設下巴
     if (gesture === "剪刀") {
-      // 左眼上緣（第159點）
-      [x, y] = keypoints[159];
+      idx = 159; // 左眼上緣
     } else if (gesture === "石頭") {
-      // 額頭中心（第10點或151點）
-      [x, y] = keypoints[10];
+      idx = 10; // 額頭中心
     } else if (gesture === "布") {
-      // 右臉頰外側（第454點）
-      [x, y] = keypoints[454];
-    } else {
-      // 預設第168點（下巴中間）
-      [x, y] = keypoints[168];
+      idx = 454; // 右臉頰
     }
+    // 取得原始點座標
+    let [px, py] = keypoints[idx];
+    // 依照 canvas 尺寸縮放
+    x = px * width / vw;
+    y = py * height / vh;
 
     noFill();
     stroke(255, 0, 0);
