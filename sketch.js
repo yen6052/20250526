@@ -55,32 +55,36 @@ function detectGesture(hands) {
 }
 
 function draw() {
-  // 鏡像處理
-  translate(width, 0);
-  scale(-1, 1);
-
   image(video, 0, 0, width, height);
 
   if (predictions.length > 0) {
     const keypoints = predictions[0].scaledMesh;
-    let idx = 168;
+
+    // 標示所有臉部輪廓點
+    noStroke();
+    fill(0, 150, 255, 180);
+    for (let i = 0; i < keypoints.length; i++) {
+      let [px, py] = keypoints[i];
+      ellipse(px, py, 4, 4);
+    }
+
+    // 根據手勢決定圓圈位置
+    let idx = 168; // 預設下巴
     if (gesture === "剪刀") {
-      idx = 159;
+      idx = 159; // 左眼上緣
     } else if (gesture === "石頭") {
-      idx = 10;
+      idx = 10; // 額頭中心
     } else if (gesture === "布") {
-      idx = 454;
+      idx = 454; // 右臉頰
     }
     let [x, y] = keypoints[idx];
-
-    // 讓臉往右移動半個畫面
-    x += width / 4;
 
     noFill();
     stroke(255, 0, 0);
     strokeWeight(4);
     ellipse(x, y, 100, 100);
 
+    // 顯示手勢
     noStroke();
     fill(0, 200, 0);
     textSize(32);
