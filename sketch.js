@@ -174,7 +174,7 @@ function draw() {
     noFill();
     stroke(255, 0, 0);
     strokeWeight(3);
-    ellipse(pt[0], pt[1], 10, 10); // 原本30，縮小2/3變20
+    ellipse(pt[0], pt[1], 20, 20); // 原本30，縮小2/3變20
 
     // 顯示手勢文字
     noStroke();
