@@ -5,7 +5,6 @@ function draw() {
   if (faces.length > 0) {
     let face = faces[0];
 
-    // 畫三角網格
     randomSeed(5);
     beginShape(TRIANGLES);
     for (let i = 0; i < triangles.length; i++) {
@@ -42,11 +41,11 @@ function draw() {
     }
     let pt = face.keypoints[idx];
 
-    // 畫小圓圈
+    // 畫更小的圓圈
     noFill();
     stroke(255, 0, 0);
-    strokeWeight(3);
-    ellipse(pt.x, pt.y, 10, 10);
+    strokeWeight(2);
+    ellipse(pt.x, pt.y, 6, 6);
 
     // 顯示手勢文字
     noStroke();
