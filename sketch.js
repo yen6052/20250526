@@ -55,36 +55,56 @@ function detectGesture(hands) {
 }
 
 function draw() {
-  image(video, 0, 0, width, height);
+  background(0);
+  video.loadPixels();
 
   if (predictions.length > 0) {
     const keypoints = predictions[0].scaledMesh;
 
-    // 標示所有臉部輪廓點
-    noStroke();
-    fill(0, 150, 255, 180);
-    for (let i = 0; i < keypoints.length; i++) {
-      let [px, py] = keypoints[i];
-      ellipse(px, py, 4, 4);
+    // 畫三角網格
+    randomSeed(5);
+    beginShape(TRIANGLES);
+    for (let i = 0; i < triangles.length; i++) {
+      let tri = triangles[i];
+      let [a, b, c] = tri;
+      let pointA = keypoints[a];
+      let pointB = keypoints[b];
+      let pointC = keypoints[c];
+
+      let cx = (pointA[0] + pointB[0] + pointC[0]) / 3;
+      let cy = (pointA[1] + pointB[1] + pointC[1]) / 3;
+
+      let index = (floor(cx) + floor(cy) * video.width) * 4;
+      let rr = video.pixels[index];
+      let gg = video.pixels[index + 1];
+      let bb = video.pixels[index + 2];
+
+      stroke(255, 255, 0);
+      fill(rr, gg, bb);
+      vertex(pointA[0], pointA[1]);
+      vertex(pointB[0], pointB[1]);
+      vertex(pointC[0], pointC[1]);
     }
+    endShape();
 
     // 根據手勢決定圓圈位置
-    let idx = 168; // 預設下巴
+    let idx = 33; // 預設左眼
     if (gesture === "剪刀") {
-      idx = 159; // 左眼上緣
+      idx = 33; // 左眼
     } else if (gesture === "石頭") {
-      idx = 10; // 額頭中心
+      idx = 263; // 右眼
     } else if (gesture === "布") {
-      idx = 454; // 右臉頰
+      idx = 152; // 下巴
     }
-    let [x, y] = keypoints[idx];
+    let pt = keypoints[idx];
 
+    // 畫小圓圈
     noFill();
     stroke(255, 0, 0);
-    strokeWeight(4);
-    ellipse(x, y, 100, 100);
+    strokeWeight(3);
+    ellipse(pt[0], pt[1], 30, 30);
 
-    // 顯示手勢
+    // 顯示手勢文字
     noStroke();
     fill(0, 200, 0);
     textSize(32);
